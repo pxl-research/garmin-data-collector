@@ -14,7 +14,7 @@ app.post('/garmin/webhook', async (request, result) => {
 
     isSavingToFile = true;
     console.log('Event received...', request.body);
-    await appendDataToUserDataFile(request.body.data.message);
+    await appendDataToUserDataFile(JSON.stringify(request.body));
     result.status(200).send('OK');
     isSavingToFile = false;
 });
