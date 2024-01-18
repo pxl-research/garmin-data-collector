@@ -8,7 +8,7 @@ let isSavingToFile = false;
 
 app.use(bodyParser.json());
 
-app.post('/garmin/webhook', async (request, result) => {
+app.post('/garmin/webhook-WZuUYtzlRbOKRUvIskLqPePaG', async (request, result) => {
     while (isSavingToFile)
         await sleep(100);
 
@@ -30,7 +30,7 @@ async function appendDataToUserDataFile(data)
     if (data == undefined)
         return;
 
-    await fs.writeFile('userdata.json', data + '\n', { flag: 'a+' }, callback => {
+    await fs.writeFile('userdata.json', data + ',\n', { flag: 'a+' }, callback => {
         if (callback == null)
         {
             console.log("Data saved to file.");
