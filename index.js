@@ -9,11 +9,11 @@ let isSavingToFile = false;
 app.use(bodyParser.json());
 
 app.post('/garmin/webhook-WZuUYtzlRbOKRUvIskLqPePaG', async (request, result) => {
+    // (JB) Believe this solution to be acceptable given the very small number of users.
     while (isSavingToFile)
         await sleep(100);
 
     isSavingToFile = true;
-    console.log('Event received...', request.body);
     await appendDataToUserDataFile(JSON.stringify(request.body));
     result.status(200).send('OK');
     isSavingToFile = false;
@@ -22,7 +22,7 @@ app.post('/garmin/webhook-WZuUYtzlRbOKRUvIskLqPePaG', async (request, result) =>
 const PORT = 3008;
 
 app.listen(PORT, () => {
-    console.log(`Now listening on port ${PORT}...`);
+    console.log(`Now listening for Garmin user data syncs on port ${PORT}...`);
 });
 
 async function appendDataToUserDataFile(data)
@@ -37,6 +37,8 @@ async function appendDataToUserDataFile(data)
             isSavingToFile = false;
             return;
         }
+
+        console.error(callback.message);
     });
 }
 
