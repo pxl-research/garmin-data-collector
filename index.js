@@ -6,7 +6,7 @@ const app = express();
 
 let isSavingToFile = false;
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '1mb' }));
 
 app.post('/garmin/webhook-WZuUYtzlRbOKRUvIskLqPePaG', async (request, result) => {
     // (JB) Believe this solution to be acceptable given the very small number of users.
