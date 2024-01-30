@@ -30,7 +30,8 @@ async function appendDataToUserDataFile(data)
     if (data == undefined)
         return;
 
-    await fs.writeFile('userdata.json', data + ',\n', { flag: 'a+' }, callback => {
+
+    await fs.writeFile(`userdata_${getCustomDate()}.json`, data + ',\n', { flag: 'a+' }, callback => {
         if (callback == null)
         {
             console.log("Data saved to file.");
@@ -45,4 +46,17 @@ async function appendDataToUserDataFile(data)
 function sleep(ms)
 {
     return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function getCustomDate()
+{
+    let date = new Date(Date.now());
+
+    let day;
+    date.getDate() < 10 ? day = `0${date.getDate()}` : day = date.getDate();
+
+    let month;
+    (date.getMonth() + 1) < 10 ? month = `0${date.getMonth() + 1}` : month = date.getMonth() + 1;
+
+    return `${date.getFullYear()}-${month}-${day}`;
 }
